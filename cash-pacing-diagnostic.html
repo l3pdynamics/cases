@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L3P Dynamics — The Week That Wasn't Behind</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #000000;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .l3p-root {
+    background: #000000;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    padding: 48px 36px 56px;
+    max-width: 860px;
+    margin: 0 auto;
+    min-height: 600px;
+  }
+
+  /* Wordmark header */
+  .l3p-mark-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 0.5px solid #4B4B4B;
+    padding-bottom: 16px;
+    margin-bottom: 36px;
+  }
+  .l3p-wordmark {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #FFFFFF;
+  }
+  .l3p-tagline {
+    font-size: 9px;
+    font-weight: 300;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #787876;
+    margin-top: 3px;
+  }
+  .l3p-case-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #CCCCCC;
+  }
+
+  .l3p-eyebrow {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: #787876;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+  }
+
+  .l3p-hero-title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    color: #FFFFFF;
+    margin: 0 0 8px;
+  }
+
+  .l3p-hero-sub {
+    font-size: 14px;
+    font-weight: 400;
+    color: #787876;
+    margin: 0 0 32px;
+    line-height: 1.55;
+    max-width: 620px;
+  }
+
+  .l3p-divider {
+    border: none;
+    border-top: 0.5px solid #4B4B4B;
+    margin: 28px 0;
+  }
+
+  .l3p-section-label {
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #787876;
+    margin: 0 0 14px;
+  }
+
+  /* Headline callout */
+  .headline-callout {
+    background: #4B4B4B;
+    border-radius: 10px;
+    padding: 26px 28px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .headline-figure {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #FFFFFF;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .headline-text {
+    font-size: 13px;
+    font-weight: 400;
+    color: #F0F0F0;
+    line-height: 1.5;
+    flex: 1;
+    min-width: 260px;
+  }
+
+  /* Narrative blocks */
+  .narrative-block {
+    margin-bottom: 26px;
+  }
+  .narrative-block p {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.65;
+    color: #E8E8E8;
+    margin: 0 0 12px;
+  }
+  .narrative-block strong {
+    color: #FFFFFF;
+    font-weight: 500;
+  }
+
+  /* Pacing bar comparison */
+  .pacing-wrap {
+    margin-bottom: 32px;
+  }
+  .pacing-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+  .pacing-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: #CCCCCC;
+    width: 150px;
+    flex-shrink: 0;
+  }
+  .pacing-track {
+    flex: 1;
+    height: 22px;
+    background: #1A1A1A;
+    border: 0.5px solid #4B4B4B;
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+  }
+  .pacing-fill {
+    height: 100%;
+    background: #787876;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+  }
+  .pacing-fill.dim { background: #4B4B4B; }
+  .pacing-fill.bright { background: #CCCCCC; }
+  .pacing-pct {
+    font-size: 10px;
+    font-weight: 700;
+    color: #000000;
+  }
+  .pacing-note {
+    font-size: 10px;
+    font-weight: 300;
+    color: #787876;
+    width: 130px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  /* Two-column comparison */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 32px;
+  }
+  .compare-card {
+    background: #0D0D0D;
+    border: 0.5px solid #4B4B4B;
+    border-radius: 8px;
+    padding: 20px 22px;
+  }
+  .compare-card.before { border-top: 3px solid #787876; }
+  .compare-card.after { border-top: 3px solid #CCCCCC; }
+  .compare-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #787876;
+    margin-bottom: 10px;
+  }
+  .compare-card.after .compare-label { color: #CCCCCC; }
+  .compare-card p {
+    font-size: 12.5px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #D8D8D8;
+    margin: 0;
+  }
+
+  /* Method steps */
+  .method-list {
+    list-style: none;
+    margin: 0 0 32px;
+    padding: 0;
+    counter-reset: step;
+  }
+  .method-list li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 18px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #E8E8E8;
+  }
+  .method-list li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 26px;
+    height: 26px;
+    border: 0.5px solid #787876;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #CCCCCC;
+  }
+  .method-list li strong {
+    display: block;
+    color: #FFFFFF;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  /* Outcome stats strip */
+  .stat-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .stat-box {
+    background: #0D0D0D;
+    border: 0.5px solid #4B4B4B;
+    border-radius: 8px;
+    padding: 18px 16px;
+    text-align: left;
+  }
+  .stat-num {
+    font-size: 22px;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-size: 10.5px;
+    font-weight: 400;
+    color: #787876;
+    line-height: 1.4;
+  }
+
+  .l3p-footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 0.5px solid #4B4B4B;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .l3p-footer-note {
+    font-size: 9.5px;
+    font-weight: 300;
+    color: #787876;
+    line-height: 1.5;
+    max-width: 480px;
+  }
+  .l3p-cta {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: #CCCCCC;
+    text-decoration: none;
+    border: 0.5px solid #787876;
+    border-radius: 20px;
+    padding: 9px 18px;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 640px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    .stat-strip { grid-template-columns: 1fr; }
+    .headline-figure { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="l3p-root">
+
+  <div class="l3p-mark-row">
+    <div>
+      <div class="l3p-wordmark">L3P DYNAMICS</div>
+      <div class="l3p-tagline">Strategy | Intelligence | Execution</div>
+    </div>
+    <div class="l3p-case-label">Case Study</div>
+  </div>
+
+  <div class="l3p-eyebrow">Recurring Revenue &middot; Multi-Site Operations</div>
+  <h1 class="l3p-hero-title">The Week That Wasn't Behind</h1>
+  <p class="l3p-hero-sub">A multi-site operator in a recurring-revenue services business was reading a mid-month pacing report as a demand problem. It was a cash-posting problem — and the reaction it was driving was doing more damage than the number itself.</p>
+
+  <div class="headline-callout">
+    <div class="headline-figure">16%</div>
+    <div class="headline-text">Of a roughly <strong>$5M</strong> annual revenue base, only about <strong>16% was cash-visible</strong> by the mid-month pacing checkpoint — regardless of how the month was actually performing.</div>
+  </div>
+
+  <div class="l3p-section-label">The Situation</div>
+  <div class="narrative-block">
+    <p>Leadership tracked performance against budget through a weekly pacing report. At the mid-month checkpoint, the report showed revenue running well short of plan. Read at face value, that looked like a demand problem — and it was treated like one: staffing levels were pulled back, and pricing concessions went out to try to close the gap before month-end.</p>
+    <p>The pacing report was never wrong about what had posted. It was wrong about what that meant.</p>
+  </div>
+
+  <div class="l3p-section-label">What the Review Found</div>
+  <div class="narrative-block">
+    <p>A full trailing-twelve-month cash-posting review showed the business's revenue is <strong>structurally back-loaded</strong> — a pattern of the underlying billing cycle, not a monthly anomaly. Roughly <strong>64.5% of gross revenue posts in the final third of the month</strong> (days 22&ndash;31), driven by when charges actually hit the ledger, not when the underlying activity occurred.</p>
+  </div>
+
+  <div class="pacing-wrap">
+    <div class="pacing-row">
+      <div class="pacing-label">Week 1 checkpoint</div>
+      <div class="pacing-track"><div class="pacing-fill dim" style="width:6%"><span class="pacing-pct" style="color:#787876; padding-right:0; margin-left:8px;">6%</span></div></div>
+      <div class="pacing-note">of month cash-visible</div>
+    </div>
+    <div class="pacing-row">
+      <div class="pacing-label">Week 2 checkpoint</div>
+      <div class="pacing-track"><div class="pacing-fill" style="width:16%"><span class="pacing-pct" style="color:#000; margin-left:8px;">16%</span></div></div>
+      <div class="pacing-note">the reactive trigger point</div>
+    </div>
+    <div class="pacing-row">
+      <div class="pacing-label">Week 3 checkpoint</div>
+      <div class="pacing-track"><div class="pacing-fill bright" style="width:35%"><span class="pacing-pct">35%</span></div></div>
+      <div class="pacing-note">of month cash-visible</div>
+    </div>
+    <div class="pacing-row">
+      <div class="pacing-label">Week 4 checkpoint</div>
+      <div class="pacing-track"><div class="pacing-fill bright" style="width:56%"><span class="pacing-pct">56%</span></div></div>
+      <div class="pacing-note">of month cash-visible</div>
+    </div>
+  </div>
+
+  <div class="compare-grid">
+    <div class="compare-card before">
+      <div class="compare-label">Before</div>
+      <p>Pacing reports benchmarked every checkpoint against a straight-line 50%-by-mid-month expectation. Any week-two read below that line was flagged as behind — and acted on immediately.</p>
+    </div>
+    <div class="compare-card after">
+      <div class="compare-label">After</div>
+      <p>Pacing benchmarks rebuilt against the business's actual cash-posting curve. A week-two read is now judged against what should realistically be visible by then — not an assumption that doesn't match how the revenue actually lands.</p>
+    </div>
+  </div>
+
+  <div class="l3p-section-label">Method</div>
+  <ol class="method-list">
+    <li><strong>Reconstructed the posting curve</strong>Pulled a full trailing-twelve-month, transaction-level cash-posting history and mapped every dollar to its actual day-of-month posting date — not a batch estimate.</li>
+    <li><strong>Isolated the pattern from the noise</strong>Bucketed postings into weekly windows across all twelve months to confirm the back-loading was a consistent structural pattern, not a one-off month or a reporting artifact.</li>
+    <li><strong>Rebuilt the benchmark</strong>Replaced the straight-line pacing assumption with checkpoint targets calibrated to the actual posting curve, so each weekly read could be judged against a realistic expectation.</li>
+    <li><strong>Reframed the response protocol</strong>Established that a below-benchmark early-month read is not, by itself, a signal to act — removing the false-alarm trigger that had been driving reactive staffing and pricing decisions before the month had a chance to post.</li>
+  </ol>
+
+  <div class="l3p-section-label">Outcome</div>
+  <div class="stat-strip">
+    <div class="stat-box">
+      <div class="stat-num">64.5%</div>
+      <div class="stat-label">of revenue structurally posts in the final third of the month</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">16%</div>
+      <div class="stat-label">true cash visibility at the checkpoint driving reactive decisions</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">0</div>
+      <div class="stat-label">false-alarm pacing reads once benchmarks matched the real posting curve</div>
+    </div>
+  </div>
+
+  <div class="narrative-block">
+    <p>The finding didn't just correct a report — it stopped a pattern of reactive decisions being made against a number that was never going to be complete at the point it was being judged. Staffing and pricing moves triggered by a mid-month read are decisions made against roughly a sixth of the month's actual revenue. Recalibrating what "on pace" looks like removed the false signal without changing anything about how the business was actually performing.</p>
+  </div>
+
+  <div class="l3p-footer">
+    <div class="l3p-footer-note">De-identified case study. Figures rounded. Entity, sector, and site-level detail withheld per client confidentiality practice.</div>
+    <a href="mailto:mark.pulaski@l3pdynamics.com" class="l3p-cta">Book a discovery call &rarr;</a>
+  </div>
+
+</div>
+
+</body>
+</html>

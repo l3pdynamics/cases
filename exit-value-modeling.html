@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L3P Dynamics — Case Study: Value Creation Modeling</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #000000; font-family: 'Inter', sans-serif; }
+
+  .l3p-root {
+    background: #000000; color: #FFFFFF; font-family: 'Inter', sans-serif;
+    padding: 48px 36px 56px; max-width: 860px; margin: 0 auto; min-height: 600px;
+  }
+
+  .l3p-mark-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 0.5px solid #4B4B4B; padding-bottom: 16px; margin-bottom: 36px;
+  }
+  .l3p-wordmark { font-size: 15px; font-weight: 700; letter-spacing: 1.5px; color: #FFFFFF; }
+  .l3p-tagline { font-size: 9px; font-weight: 300; letter-spacing: 1.5px; text-transform: uppercase; color: #787876; margin-top: 3px; }
+  .l3p-case-label { font-size: 10px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: #CCCCCC; }
+
+  .l3p-eyebrow { font-size: 11px; font-weight: 400; letter-spacing: 2px; color: #787876; text-transform: uppercase; margin: 0 0 10px; }
+  .l3p-hero-title { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.15; color: #FFFFFF; margin: 0 0 8px; }
+  .l3p-hero-sub { font-size: 14px; font-weight: 400; color: #787876; margin: 0 0 32px; line-height: 1.55; max-width: 620px; }
+
+  .l3p-divider { border: none; border-top: 0.5px solid #4B4B4B; margin: 28px 0; }
+  .l3p-section-label { font-size: 10px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; color: #787876; margin: 0 0 14px; }
+
+  .headline-callout {
+    background: #4B4B4B; border-radius: 10px; padding: 26px 28px; margin-bottom: 32px;
+    display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+  }
+  .headline-figure { font-size: 40px; font-weight: 700; letter-spacing: -0.5px; color: #FFFFFF; line-height: 1; white-space: nowrap; }
+  .headline-text { font-size: 13px; font-weight: 400; color: #F0F0F0; line-height: 1.5; flex: 1; min-width: 260px; }
+
+  .narrative-block { margin-bottom: 26px; }
+  .narrative-block p { font-size: 13px; font-weight: 400; line-height: 1.65; color: #E8E8E8; margin: 0 0 12px; }
+  .narrative-block strong { color: #FFFFFF; font-weight: 500; }
+
+  .bridge-wrap { margin-bottom: 32px; }
+  .bridge-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .bridge-label { font-size: 11px; font-weight: 500; color: #CCCCCC; width: 170px; flex-shrink: 0; }
+  .bridge-track { flex: 1; height: 22px; background: #1A1A1A; border: 0.5px solid #4B4B4B; border-radius: 3px; overflow: hidden; position: relative; }
+  .bridge-fill { height: 100%; background: #787876; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; }
+  .bridge-fill.bright { background: #CCCCCC; }
+  .bridge-fill.mid { background: #5F5E5A; }
+  .bridge-pct { font-size: 10px; font-weight: 700; color: #000000; }
+  .bridge-note { font-size: 10px; font-weight: 300; color: #787876; width: 130px; flex-shrink: 0; text-align: right; }
+
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 32px; }
+  .compare-card { background: #0D0D0D; border: 0.5px solid #4B4B4B; border-radius: 8px; padding: 20px 22px; }
+  .compare-card.before { border-top: 3px solid #787876; }
+  .compare-card.after { border-top: 3px solid #CCCCCC; }
+  .compare-label { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #787876; margin-bottom: 10px; }
+  .compare-card.after .compare-label { color: #CCCCCC; }
+  .compare-card p { font-size: 12.5px; font-weight: 400; line-height: 1.6; color: #D8D8D8; margin: 0; }
+
+  .method-list { list-style: none; margin: 0 0 32px; padding: 0; counter-reset: step; }
+  .method-list li { counter-increment: step; position: relative; padding-left: 40px; margin-bottom: 18px; font-size: 13px; line-height: 1.6; color: #E8E8E8; }
+  .method-list li::before {
+    content: counter(step); position: absolute; left: 0; top: 0; width: 26px; height: 26px;
+    border: 0.5px solid #787876; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #CCCCCC;
+  }
+  .method-list li strong { display: block; color: #FFFFFF; font-weight: 500; font-size: 12px; letter-spacing: 0.3px; text-transform: uppercase; margin-bottom: 4px; }
+
+  .stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 32px; }
+  .stat-box { background: #0D0D0D; border: 0.5px solid #4B4B4B; border-radius: 8px; padding: 18px 16px; text-align: left; }
+  .stat-num { font-size: 22px; font-weight: 700; color: #FFFFFF; line-height: 1; margin-bottom: 6px; }
+  .stat-label { font-size: 10.5px; font-weight: 400; color: #787876; line-height: 1.4; }
+
+  .l3p-footer { margin-top: 40px; padding-top: 20px; border-top: 0.5px solid #4B4B4B; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .l3p-footer-note { font-size: 9.5px; font-weight: 300; color: #787876; line-height: 1.5; max-width: 480px; }
+  .l3p-cta { font-size: 10.5px; font-weight: 500; letter-spacing: 0.5px; color: #CCCCCC; text-decoration: none; border: 0.5px solid #787876; border-radius: 20px; padding: 9px 18px; white-space: nowrap; }
+
+  @media (max-width: 780px) {
+    .stat-strip { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    .stat-strip { grid-template-columns: 1fr; }
+    .headline-figure { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="l3p-root">
+
+  <div class="l3p-mark-row">
+    <div>
+      <div class="l3p-wordmark">L3P DYNAMICS</div>
+      <div class="l3p-tagline">Strategy | Intelligence | Execution</div>
+    </div>
+    <div class="l3p-case-label">Case Study</div>
+  </div>
+
+  <div class="l3p-eyebrow">Value Creation Modeling &middot; Senior Living</div>
+  <h1 class="l3p-hero-title">What Operating Discipline Is Actually Worth at Exit</h1>
+  <p class="l3p-hero-sub">A capital partner approached us wanting to know what disciplined operations were actually worth upon exit &mdash; not just whether income would grow, but how much of the eventual sale value that growth alone would earn versus what the market would simply hand them through cap rate movement.</p>
+
+  <div class="headline-callout">
+    <div class="headline-figure">80%</div>
+    <div class="headline-text">Of the total exit valuation increase between the conservative and optimized scenarios &mdash; roughly <strong>$9.1M of $11.5M</strong> &mdash; came from operational improvement alone, before any credit for cap rate compression.</div>
+  </div>
+
+  <div class="l3p-section-label">The Situation</div>
+  <div class="narrative-block">
+    <p>The capital partner had a budget-baseline operating plan and an optimistic one, and no way to see how much of the gap between them actually mattered to an investor at sale. Exit value depends on two things multiplying together &mdash; net operating income and the cap rate a buyer applies to it &mdash; and the two get conflated constantly. A stronger operating story earns a better cap rate <em>and</em> a bigger income number, and without separating them, it's impossible to say which lever is actually doing the work.</p>
+  </div>
+
+  <div class="l3p-section-label">What the Model Found</div>
+  <div class="narrative-block">
+    <p>Isolating the two effects at the same, conservative exit cap rate showed that operational improvement alone &mdash; not the cap rate compression that consistent performance typically earns &mdash; accounted for the large majority of the total value created between the weakest and strongest scenarios modeled.</p>
+  </div>
+
+  <div class="bridge-wrap">
+    <div class="bridge-row">
+      <div class="bridge-label">Baseline valuation</div>
+      <div class="bridge-track"><div class="bridge-fill" style="width:68%"><span class="bridge-pct" style="color:#000;">$23.4M</span></div></div>
+      <div class="bridge-note">conservative scenario</div>
+    </div>
+    <div class="bridge-row">
+      <div class="bridge-label">+ From operations</div>
+      <div class="bridge-track"><div class="bridge-fill bright" style="width:27%"><span class="bridge-pct">+$9.1M</span></div></div>
+      <div class="bridge-note">80% of total uplift</div>
+    </div>
+    <div class="bridge-row">
+      <div class="bridge-label">+ From cap rate</div>
+      <div class="bridge-track"><div class="bridge-fill mid" style="width:7%"></div></div>
+      <div class="bridge-note">+$2.4M &middot; 20% of total uplift</div>
+    </div>
+    <div class="bridge-row">
+      <div class="bridge-label">Aggressive valuation</div>
+      <div class="bridge-track"><div class="bridge-fill" style="width:100%"><span class="bridge-pct" style="color:#000;">$34.2M</span></div></div>
+      <div class="bridge-note">optimized scenario</div>
+    </div>
+  </div>
+
+  <div class="compare-grid">
+    <div class="compare-card before">
+      <div class="compare-label">Without decomposition</div>
+      <p>Exit value moves from $23.4M to $34.2M and the improvement story reads as one number &mdash; impossible to tell an investor how much came from operations versus market timing they can't control or promise.</p>
+    </div>
+    <div class="compare-card after">
+      <div class="compare-label">With decomposition</div>
+      <p>$9.1M of the $11.5M uplift is attributable to operating decisions alone, held at a constant, conservative cap rate &mdash; a claim about performance the capital partner can actually defend to a buyer or lender.</p>
+    </div>
+  </div>
+
+  <div class="l3p-section-label">Method</div>
+  <ol class="method-list">
+    <li><strong>Built three operating paths for one asset</strong>Modeled budget-baseline, optimized, and aggressive NOI trajectories over a five-year hold for the same property &mdash; same debt, same unit count, same starting point.</li>
+    <li><strong>Assigned a defensible exit cap rate to each</strong>Tied each scenario's terminal cap rate to how consistently the property performed under that path, rather than using one flat assumption across all three.</li>
+    <li><strong>Isolated NOI growth from cap rate movement</strong>Re-priced the strongest scenario's NOI at the weakest scenario's cap rate to strip out market-driven compression and measure operational impact on its own.</li>
+    <li><strong>Attributed the remaining uplift to the market</strong>Measured what cap rate compression alone added once operational improvement was already accounted for &mdash; the true market-driven share of the total gain.</li>
+  </ol>
+
+  <div class="l3p-section-label">Outcome</div>
+  <div class="stat-strip">
+    <div class="stat-box">
+      <div class="stat-num">$9.1M</div>
+      <div class="stat-label">of exit valuation increase from operational improvement alone</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">80%</div>
+      <div class="stat-label">share of total uplift attributable to operations, not market movement</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">3.7x</div>
+      <div class="stat-label">equity multiple in the aggressive scenario vs. near-zero in baseline</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">&minus;27.9% &rarr; +28.5%</div>
+      <div class="stat-label">equity IRR range across scenarios &mdash; same asset, same debt, different operating discipline</div>
+    </div>
+  </div>
+
+  <div class="narrative-block">
+    <p>The finding reframes the conversation with capital partners: the case for the deal isn't "trust that cap rates will move in our favor" &mdash; it's "here's what disciplined operations are worth on their own, held to a conservative market assumption." A 56-point IRR swing on the same asset and the same debt is the clearest evidence that the return isn't riding on the market &mdash; it's riding on how the property is run. That's a claim a capital partner can make to a lender or buyer and defend line by line.</p>
+  </div>
+
+  <div class="l3p-footer">
+    <div class="l3p-footer-note">De-identified case study. Figures rounded. Entity, sector, and site-level detail withheld per client confidentiality practice.</div>
+    <a href="mailto:mark.pulaski@l3pdynamics.com" class="l3p-cta">Book a discovery call &rarr;</a>
+  </div>
+
+</div>
+
+</body>
+</html>

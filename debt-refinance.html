@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L3P Dynamics — Case Study: Refinance Restructuring</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #000000; font-family: 'Inter', sans-serif; }
+
+  .l3p-root {
+    background: #000000; color: #FFFFFF; font-family: 'Inter', sans-serif;
+    padding: 48px 36px 56px; max-width: 860px; margin: 0 auto; min-height: 600px;
+  }
+
+  .l3p-mark-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 0.5px solid #4B4B4B; padding-bottom: 16px; margin-bottom: 36px;
+  }
+  .l3p-wordmark { font-size: 15px; font-weight: 700; letter-spacing: 1.5px; color: #FFFFFF; }
+  .l3p-tagline { font-size: 9px; font-weight: 300; letter-spacing: 1.5px; text-transform: uppercase; color: #787876; margin-top: 3px; }
+  .l3p-case-label { font-size: 10px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: #CCCCCC; }
+
+  .l3p-eyebrow { font-size: 11px; font-weight: 400; letter-spacing: 2px; color: #787876; text-transform: uppercase; margin: 0 0 10px; }
+  .l3p-hero-title { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.15; color: #FFFFFF; margin: 0 0 8px; }
+  .l3p-hero-sub { font-size: 14px; font-weight: 400; color: #787876; margin: 0 0 32px; line-height: 1.55; max-width: 620px; }
+
+  .l3p-divider { border: none; border-top: 0.5px solid #4B4B4B; margin: 28px 0; }
+  .l3p-section-label { font-size: 10px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; color: #787876; margin: 0 0 14px; }
+
+  .headline-callout {
+    background: #4B4B4B; border-radius: 10px; padding: 26px 28px; margin-bottom: 32px;
+    display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+  }
+  .headline-figure { font-size: 40px; font-weight: 700; letter-spacing: -0.5px; color: #FFFFFF; line-height: 1; white-space: nowrap; }
+  .headline-text { font-size: 13px; font-weight: 400; color: #F0F0F0; line-height: 1.5; flex: 1; min-width: 260px; }
+
+  .narrative-block { margin-bottom: 26px; }
+  .narrative-block p { font-size: 13px; font-weight: 400; line-height: 1.65; color: #E8E8E8; margin: 0 0 12px; }
+  .narrative-block strong { color: #FFFFFF; font-weight: 500; }
+
+  .bar-wrap { margin-bottom: 32px; }
+  .bar-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .bar-label { font-size: 11px; font-weight: 500; color: #CCCCCC; width: 170px; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 22px; background: #1A1A1A; border: 0.5px solid #4B4B4B; border-radius: 3px; overflow: hidden; position: relative; }
+  .bar-fill { height: 100%; background: #787876; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; }
+  .bar-fill.bright { background: #CCCCCC; }
+  .bar-pct { font-size: 10px; font-weight: 700; color: #000000; }
+  .bar-note { font-size: 10px; font-weight: 300; color: #787876; width: 130px; flex-shrink: 0; text-align: right; }
+
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 32px; }
+  .compare-card { background: #0D0D0D; border: 0.5px solid #4B4B4B; border-radius: 8px; padding: 20px 22px; }
+  .compare-card.before { border-top: 3px solid #787876; }
+  .compare-card.after { border-top: 3px solid #CCCCCC; }
+  .compare-label { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #787876; margin-bottom: 10px; }
+  .compare-card.after .compare-label { color: #CCCCCC; }
+  .compare-card p { font-size: 12.5px; font-weight: 400; line-height: 1.6; color: #D8D8D8; margin: 0; }
+
+  .method-list { list-style: none; margin: 0 0 32px; padding: 0; counter-reset: step; }
+  .method-list li { counter-increment: step; position: relative; padding-left: 40px; margin-bottom: 18px; font-size: 13px; line-height: 1.6; color: #E8E8E8; }
+  .method-list li::before {
+    content: counter(step); position: absolute; left: 0; top: 0; width: 26px; height: 26px;
+    border: 0.5px solid #787876; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #CCCCCC;
+  }
+  .method-list li strong { display: block; color: #FFFFFF; font-weight: 500; font-size: 12px; letter-spacing: 0.3px; text-transform: uppercase; margin-bottom: 4px; }
+
+  .stat-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 32px; }
+  .stat-box { background: #0D0D0D; border: 0.5px solid #4B4B4B; border-radius: 8px; padding: 18px 16px; text-align: left; }
+  .stat-num { font-size: 22px; font-weight: 700; color: #FFFFFF; line-height: 1; margin-bottom: 6px; }
+  .stat-label { font-size: 10.5px; font-weight: 400; color: #787876; line-height: 1.4; }
+
+  .l3p-footer { margin-top: 40px; padding-top: 20px; border-top: 0.5px solid #4B4B4B; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .l3p-footer-note { font-size: 9.5px; font-weight: 300; color: #787876; line-height: 1.5; max-width: 480px; }
+  .l3p-cta { font-size: 10.5px; font-weight: 500; letter-spacing: 0.5px; color: #CCCCCC; text-decoration: none; border: 0.5px solid #787876; border-radius: 20px; padding: 9px 18px; white-space: nowrap; }
+
+  @media (max-width: 640px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    .stat-strip { grid-template-columns: 1fr; }
+    .headline-figure { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="l3p-root">
+
+  <div class="l3p-mark-row">
+    <div>
+      <div class="l3p-wordmark">L3P DYNAMICS</div>
+      <div class="l3p-tagline">Strategy | Intelligence | Execution</div>
+    </div>
+    <div class="l3p-case-label">Case Study</div>
+  </div>
+
+  <div class="l3p-eyebrow">Debt Restructuring &middot; Senior Living</div>
+  <h1 class="l3p-hero-title">Right-Sizing a Deal That Was About to Cost More Than It Should</h1>
+  <p class="l3p-hero-sub">An operator was moving through a refinance with two lenders and a debt structure sized against pre-turnaround assumptions. The numbers on the term sheets worked. The property's actual cash flow didn't agree.</p>
+
+  <div class="headline-callout">
+    <div class="headline-figure">$944K</div>
+    <div class="headline-text">Restructuring the deal cut ownership's projected two-year cash contribution from roughly <strong>$1.49M to $546K</strong> &mdash; without walking away from either lender.</div>
+  </div>
+
+  <div class="l3p-section-label">The Situation</div>
+  <div class="narrative-block">
+    <p>The refinance was already in motion when we were brought in &mdash; two term sheets on the table, a senior loan and a secondary financing layer, both sized to the original deal assumptions. On paper, the structure closed the transaction. Against the property's actual, current cash flow, it didn't.</p>
+    <p>Two separate lenders meant two separate sets of covenants &mdash; loan-to-value limits, minimum coverage ratios, disbursement triggers &mdash; each with its own math and its own tolerance for how thin the numbers could run before the deal stopped qualifying.</p>
+  </div>
+
+  <div class="l3p-section-label">What the Review Found</div>
+  <div class="narrative-block">
+    <p>Tested against both lenders' actual covenants, the original structure was carrying more debt than the property's near-term operations could service. Combined debt coverage came in at <strong>0.63x in year two</strong> &mdash; well below the 1.0x minimum either lender required &mdash; which meant ownership was on the hook to personally fund the shortfall out of pocket, not the property.</p>
+  </div>
+
+  <div class="bar-wrap">
+    <div class="bar-row">
+      <div class="bar-label">Total debt</div>
+      <div class="bar-track"><div class="bar-fill" style="width:76%"><span class="bar-pct" style="color:#000;">&minus;23.5%</span></div></div>
+      <div class="bar-note">$29.3M &rarr; $22.4M</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Annual debt service</div>
+      <div class="bar-track"><div class="bar-fill" style="width:76%"><span class="bar-pct" style="color:#000;">&minus;23.5%</span></div></div>
+      <div class="bar-note">$2.30M &rarr; $1.76M</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">2-yr equity required</div>
+      <div class="bar-track"><div class="bar-fill bright" style="width:37%"><span class="bar-pct">&minus;63.1%</span></div></div>
+      <div class="bar-note">$1.49M &rarr; $546K</div>
+    </div>
+  </div>
+
+  <div class="compare-grid">
+    <div class="compare-card before">
+      <div class="compare-label">Before</div>
+      <p>Secondary financing sized to fully repay the prior note, without testing whether the resulting combined debt service actually fit the property's near-term cash flow. Combined coverage ran at 0.63x against a 1.0x requirement.</p>
+    </div>
+    <div class="compare-card after">
+      <div class="compare-label">After</div>
+      <p>Secondary financing re-sized to the level the property's cash flow could carry &mdash; trading a smaller recovery on the prior note for a structure both lenders' covenants would actually pass, and ownership could actually fund.</p>
+    </div>
+  </div>
+
+  <div class="l3p-section-label">Method</div>
+  <ol class="method-list">
+    <li><strong>Modeled both lenders together</strong>Built a combined covenant model spanning both term sheets &mdash; senior debt service, secondary financing, and the combined coverage test each lender required independently.</li>
+    <li><strong>Tested the original structure against real cash flow</strong>Ran the property's actual year-one and year-two operating proforma against both sets of covenants, rather than the assumptions the original term sheets were built on.</li>
+    <li><strong>Built the trade-off table</strong>Sized secondary financing at every level from full to zero, showing exactly how much cash ownership would need to fund at each size &mdash; and how much of the prior note went unrecovered at each level.</li>
+    <li><strong>Re-sized to the level that actually cleared covenants</strong>Selected the secondary financing amount that brought combined coverage into a passing range for both lenders while minimizing the cash ownership had to contribute.</li>
+  </ol>
+
+  <div class="l3p-section-label">Outcome</div>
+  <div class="stat-strip">
+    <div class="stat-box">
+      <div class="stat-num">&minus;63.1%</div>
+      <div class="stat-label">reduction in ownership's projected 2-year cash contribution</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">+0.18x</div>
+      <div class="stat-label">improvement in year-two combined debt service coverage</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">2</div>
+      <div class="stat-label">lenders' covenants satisfied by one re-sized structure</div>
+    </div>
+  </div>
+
+  <div class="narrative-block">
+    <p>The deal didn't need a different lender or a longer negotiation &mdash; it needed the secondary financing sized to what the property could actually carry, not what the original assumptions called for. Modeling both lenders' covenants together, instead of negotiating each in isolation, is what surfaced the trade-off and let ownership choose a structure that worked on both sides of the table.</p>
+  </div>
+
+  <div class="l3p-footer">
+    <div class="l3p-footer-note">De-identified case study. Figures rounded. Entity, lender, and site-level detail withheld per client confidentiality practice.</div>
+    <a href="mailto:mark.pulaski@l3pdynamics.com" class="l3p-cta">Book a discovery call &rarr;</a>
+  </div>
+
+</div>
+
+</body>
+</html>

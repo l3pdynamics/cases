@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L3P Dynamics — Land Development Model Review Case Study</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #000000;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .l3p-root {
+    background: #000000;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    padding: 48px 36px 56px;
+    max-width: 860px;
+    margin: 0 auto;
+    min-height: 600px;
+  }
+
+  .l3p-eyebrow {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: #787876;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+  }
+
+  /* Wordmark header block */
+  .l3p-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+    border-bottom: 0.5px solid #4B4B4B;
+    flex-wrap: wrap;
+  }
+
+  .l3p-wordmark {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #FFFFFF;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .l3p-wordmark-tagline {
+    font-size: 9px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #787876;
+    margin: 6px 0 0;
+  }
+
+  .l3p-header-meta {
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #787876;
+    text-align: right;
+  }
+
+  .l3p-hero-title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    color: #FFFFFF;
+    margin: 0 0 8px;
+  }
+
+  .l3p-hero-sub {
+    font-size: 14px;
+    font-weight: 400;
+    color: #787876;
+    margin: 0 0 32px;
+    line-height: 1.5;
+  }
+
+  .l3p-divider {
+    border: none;
+    border-top: 0.5px solid #4B4B4B;
+    margin: 28px 0;
+  }
+
+  .l3p-section-label {
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #787876;
+    margin: 0 0 14px;
+  }
+
+  /* Headline swing callout */
+  .swing-callout {
+    background: #4B4B4B;
+    border-radius: 10px;
+    padding: 26px 28px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .swing-figure {
+    font-size: 40px;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: -1px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .swing-text {
+    font-size: 13px;
+    color: #CCCCCC;
+    line-height: 1.5;
+    flex: 1;
+    min-width: 220px;
+  }
+
+  .swing-text strong { color: #FFFFFF; font-weight: 500; }
+
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .impact-card {
+    background: #4B4B4B;
+    border-radius: 8px;
+    padding: 18px 16px;
+  }
+
+  .impact-card .ic-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: -0.3px;
+    margin: 0 0 4px;
+    line-height: 1.1;
+  }
+
+  .impact-card .ic-label {
+    font-size: 11px;
+    font-weight: 300;
+    color: #CCCCCC;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .story-section { margin-bottom: 28px; }
+
+  .story-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #FFFFFF;
+    margin: 0 0 10px;
+  }
+
+  .finding-list { list-style: none; padding: 0; margin: 0; }
+
+  .finding-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 0.5px solid #4B4B4B;
+    font-size: 13px;
+    color: #CCCCCC;
+    line-height: 1.5;
+  }
+
+  .finding-item:last-child { border-bottom: none; }
+
+  .finding-number {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 700;
+    color: #787876;
+    width: 18px;
+    padding-top: 2px;
+  }
+
+  .finding-item strong { color: #FFFFFF; font-weight: 500; }
+
+  /* Exit comparison table */
+  .exit-table { margin-bottom: 28px; }
+
+  .exit-row-head {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 1.2fr 1.2fr;
+    gap: 0;
+    font-size: 10px;
+    color: #787876;
+    padding: 6px 0;
+    border-bottom: 0.5px solid #4B4B4B;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .exit-row {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 1.2fr 1.2fr;
+    gap: 0;
+    font-size: 13px;
+    color: #CCCCCC;
+    padding: 14px 0;
+    border-bottom: 0.5px solid #4B4B4B;
+    align-items: center;
+  }
+
+  .exit-row:last-child { border-bottom: none; }
+
+  .exit-name { color: #FFFFFF; font-weight: 500; }
+  .exit-name .exit-tag {
+    display: block;
+    font-size: 10px;
+    font-weight: 300;
+    color: #787876;
+    margin-top: 2px;
+  }
+
+  .num-right { text-align: right; }
+  .deck-num { color: #787876; text-decoration: line-through; text-decoration-color: #4B4B4B; }
+  .l3p-num { color: #FFFFFF; font-weight: 600; }
+  .l3p-num.best { color: #CCCCCC; }
+
+  .model-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .compare-card {
+    background: #4B4B4B;
+    border-radius: 8px;
+    padding: 16px;
+  }
+
+  .compare-card .cc-label {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #787876;
+    margin: 0 0 6px;
+  }
+
+  .compare-card .cc-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0 0 4px;
+    letter-spacing: -0.3px;
+  }
+
+  .compare-card .cc-sub {
+    font-size: 11px;
+    font-weight: 300;
+    color: #CCCCCC;
+    margin: 0;
+  }
+
+  .compare-card.highlight { border: 0.5px solid #787876; }
+
+  .value-prop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .vp-card {
+    border: 0.5px solid #4B4B4B;
+    border-radius: 8px;
+    padding: 16px;
+  }
+
+  .vp-card .vp-title { font-size: 12px; font-weight: 500; color: #FFFFFF; margin: 0 0 6px; }
+  .vp-card .vp-body { font-size: 12px; font-weight: 300; color: #787876; margin: 0; line-height: 1.5; }
+
+  .cta-block {
+    background: #4B4B4B;
+    border-radius: 8px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .cta-text { flex: 1; min-width: 200px; }
+  .cta-text .ct-title { font-size: 14px; font-weight: 500; color: #FFFFFF; margin: 0 0 4px; }
+  .cta-text .ct-sub { font-size: 12px; font-weight: 300; color: #CCCCCC; margin: 0; }
+
+  .cta-btn {
+    background: #FFFFFF;
+    color: #000000;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 10px 22px;
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .cta-btn:hover { background: #CCCCCC; }
+
+  .l3p-footer {
+    font-size: 10px;
+    font-weight: 300;
+    color: #787876;
+    margin-top: 28px;
+    letter-spacing: 0.5px;
+    border-top: 0.5px solid #4B4B4B;
+    padding-top: 16px;
+  }
+
+  .checklist-note {
+    background: #4B4B4B;
+    border-radius: 8px;
+    padding: 16px 18px;
+    font-size: 12px;
+    color: #CCCCCC;
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  .checklist-note strong { color: #FFFFFF; }
+
+  /* Chart blocks */
+  .chart-block { margin-bottom: 28px; }
+
+  .exit-chart-row {
+    display: grid;
+    grid-template-columns: 150px 1fr 90px;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .exit-chart-label {
+    font-size: 12px;
+    color: #FFFFFF;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .exit-chart-label .exit-chart-tag {
+    display: block;
+    font-size: 10px;
+    font-weight: 300;
+    color: #787876;
+    margin-top: 2px;
+  }
+
+  .exit-bar-track {
+    position: relative;
+    height: 22px;
+    background: #1A1A1A;
+    border-radius: 3px;
+  }
+
+  .exit-bar-fill {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    border-radius: 3px;
+    background: #4B4B4B;
+    border: 0.5px solid #787876;
+  }
+
+  .exit-bar-fill.deck {
+    background: transparent;
+    border: 0.5px dashed #787876;
+  }
+
+  .exit-chart-value {
+    font-size: 13px;
+    font-weight: 700;
+    color: #FFFFFF;
+    text-align: right;
+  }
+
+  .chart-legend {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 18px;
+    font-size: 10px;
+    color: #787876;
+    flex-wrap: wrap;
+  }
+
+  .chart-legend span { display: flex; align-items: center; gap: 6px; }
+
+  .legend-swatch {
+    width: 12px;
+    height: 8px;
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  .legend-swatch.deck { background: transparent; border: 0.5px dashed #787876; }
+  .legend-swatch.actual { background: #4B4B4B; border: 0.5px solid #787876; }
+
+  .zero-line {
+    position: absolute;
+    top: -4px;
+    bottom: -4px;
+    width: 1px;
+    background: #787876;
+  }
+
+  /* Sensitivity chart */
+  .sens-row {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .sens-label {
+    font-size: 11px;
+    color: #CCCCCC;
+    text-align: right;
+  }
+
+  .sens-track {
+    position: relative;
+    height: 20px;
+    background: #1A1A1A;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .sens-fill {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+    border-radius: 3px;
+  }
+
+  .sens-fill.loss { background: #4B4B4B; border: 0.5px solid #787876; color: #CCCCCC; }
+  .sens-fill.near { background: #787876; color: #FFFFFF; }
+  .sens-fill.gain { background: #CCCCCC; color: #000000; }
+
+  @media (max-width: 600px) {
+    .exit-chart-row { grid-template-columns: 100px 1fr 70px; gap: 8px; }
+    .exit-chart-value { font-size: 11px; }
+    .exit-row-head, .exit-row { grid-template-columns: 1.6fr 1fr 1fr; }
+    .exit-row-head span:nth-child(4), .exit-row span:nth-child(4) { display: none; }
+    .swing-figure { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="l3p-root">
+  <!-- LOGO: insert here once PNG-24 (transparent, 3D metallic) received from designer.
+       Replace .l3p-wordmark text block below with <img> per style guide:
+       min 50px digital height, 33% clear space on all sides, mono or 3D metallic per background. -->
+  <div class="l3p-header">
+    <div>
+      <p class="l3p-wordmark">L3P DYNAMICS</p>
+      <p class="l3p-wordmark-tagline">Strategy | Intelligence | Execution</p>
+    </div>
+    <p class="l3p-header-meta">Case Study</p>
+  </div>
+
+  <h1 class="l3p-hero-title">What we found before<br>a dollar was raised.</h1>
+  <p class="l3p-hero-sub">A land development sponsor brought a 16-slide investor deck pitching a build-out project as a "go." The stress-tested pro forma told a different story — before any capital moved.</p>
+
+  <div class="swing-callout">
+    <div class="swing-figure">$694K</div>
+    <div class="swing-text">Gap between the deck's pitched outcome and the corrected outcome on the deal's <strong>best exit path</strong> — the capital the sponsor did not raise, and did not lose, because the flawed assumption was caught before the raise, not after close.</div>
+  </div>
+
+  <p class="l3p-section-label">The pitch vs. the corrected model</p>
+
+  <div class="exit-table">
+    <div class="exit-row-head">
+      <span>Exit path</span><span class="num-right">Deck claim</span><span class="num-right">L3P finding</span><span class="num-right">Swing</span>
+    </div>
+    <div class="exit-row">
+      <span class="exit-name">Lot + Home Packages<span class="exit-tag">Positioned as the primary path — 23% ROC</span></span>
+      <span class="num-right deck-num">+$294,749</span>
+      <span class="num-right l3p-num">−$399,000</span>
+      <span class="num-right">−$694K</span>
+    </div>
+    <div class="exit-row">
+      <span class="exit-name">Finished Lots<span class="exit-tag">Not separately modeled in the original deck</span></span>
+      <span class="num-right deck-num">— n/a</span>
+      <span class="num-right l3p-num best">−$111,000</span>
+      <span class="num-right">safest floor</span>
+    </div>
+    <div class="exit-row">
+      <span class="exit-name">Sell to Developer<span class="exit-tag">Pitched as "fastest, lowest risk"</span></span>
+      <span class="num-right deck-num">favorable framing</span>
+      <span class="num-right l3p-num">−$1.30M</span>
+      <span class="num-right">downside-only</span>
+    </div>
+  </div>
+
+  <p style="font-size:11px;color:#787876;margin:0 0 28px;">All three exits lose money at base case, before any stress is applied. Finished Lots — not modeled separately in the deck — is the realistic floor once each exit carries only its own costs.</p>
+
+  <div class="chart-block">
+    <p class="l3p-section-label">Net profit by exit — deck claim vs. corrected model</p>
+    <div class="chart-legend">
+      <span><span class="legend-swatch deck"></span>Deck claim (unverified)</span>
+      <span><span class="legend-swatch actual"></span>L3P corrected finding</span>
+    </div>
+
+    <div class="exit-chart-row">
+      <span class="exit-chart-label">Lot + Home<span class="exit-chart-tag">Deck: +$295K</span></span>
+      <div class="exit-bar-track">
+        <div class="zero-line" style="left:20%;"></div>
+        <div class="exit-bar-fill" style="left:calc(20% - 27%); width:27%;"></div>
+      </div>
+      <span class="exit-chart-value">−$399K</span>
+    </div>
+
+    <div class="exit-chart-row">
+      <span class="exit-chart-label">Finished Lots<span class="exit-chart-tag">Not modeled in deck</span></span>
+      <div class="exit-bar-track">
+        <div class="zero-line" style="left:20%;"></div>
+        <div class="exit-bar-fill" style="left:calc(20% - 8%); width:8%;"></div>
+      </div>
+      <span class="exit-chart-value">−$111K</span>
+    </div>
+
+    <div class="exit-chart-row">
+      <span class="exit-chart-label">Sell to Developer<span class="exit-chart-tag">Deck: "lowest risk"</span></span>
+      <div class="exit-bar-track">
+        <div class="zero-line" style="left:20%;"></div>
+        <div class="exit-bar-fill" style="left:0%; width:20%;"></div>
+      </div>
+      <span class="exit-chart-value">−$1.30M</span>
+    </div>
+
+    <p style="font-size:10px;color:#787876;margin:10px 0 0;">Bars scaled to loss magnitude, zero-line marks break-even. Deck showed only the Lot + Home path as a projected gain (dashed reference not drawn to scale — deck did not model the other two exits).</p>
+  </div>
+
+  <hr class="l3p-divider">
+
+  <p class="l3p-section-label">Five things this engagement delivered beyond the headline number</p>
+  <ul class="finding-list">
+    <li class="finding-item">
+      <span class="finding-number">01</span>
+      <span><strong>Model reconciliation — the credibility catch.</strong> Two internal sponsor models, dated the same day, reached opposite conclusions on the build-out exit (+$69K vs. −$399K) — a ~$470K cost basis gap plus a static interest-carry plug versus a formula-driven figure. Resolved before anything went external.</span>
+    </li>
+    <li class="finding-item">
+      <span class="finding-number">02</span>
+      <span><strong>Finished Lots de-risked, not just re-run.</strong> A shared-cost-allocation error had every exit absorbing full build-out costs. Corrected, the fallback exit moved from a ~$1.1M loss to a ~$111K loss — a materially different risk profile for the safest path.</span>
+    </li>
+    <li class="finding-item">
+      <span class="finding-number">03</span>
+      <span><strong>A path back to positive, not just a "no."</strong> Three concrete, costed levers were identified to bring the build-out exit to a positive return: horizontal cost reduction, proving the price band with closed comps, and restructuring the capital stack.</span>
+    </li>
+    <li class="finding-item">
+      <span class="finding-number">04</span>
+      <span><strong>A 17-item pre-capital-raise checklist.</strong> Open exposure the deck was silent on — stormwater and drainage, wetland delineation, impact fee verification, flood zone, title and financing path — each one a potential post-close surprise avoided pre-close.</span>
+    </li>
+    <li class="finding-item">
+      <span class="finding-number">05</span>
+      <span><strong>Durable infrastructure, not a one-time number.</strong> A rebuilt 13-tab pro forma — zero formula errors, scenario manager, stress-results tab, extended 30-month timeline — is a reusable decision tool for this deal and the template for future engagements.</span>
+    </li>
+  </ul>
+
+  <hr class="l3p-divider">
+
+  <p class="l3p-section-label">Model vs. reality — the reconciliation catch</p>
+  <div class="model-compare">
+    <div class="compare-card">
+      <p class="cc-label">Cash flow model</p>
+      <p class="cc-value">+$69K</p>
+      <p class="cc-sub">Same exit, same day, different model.<br>Static interest-carry plug.</p>
+    </div>
+    <div class="compare-card highlight">
+      <p class="cc-label">Full pro forma (governing)</p>
+      <p class="cc-value" style="color:#CCCCCC;">−$399K</p>
+      <p class="cc-sub">Formula-driven interest carry.<br>The model that would go to lenders.</p>
+    </div>
+  </div>
+
+  <div class="checklist-note">
+    <strong>Why this mattered most:</strong> presenting either model unreconciled to a capital partner would have been a credibility failure the moment a partner cross-checked the numbers. Catching the ~$470K gap pre-raise turned a potential trust problem into a stronger, more honest pitch.
+  </div>
+
+  <hr class="l3p-divider">
+
+  <div class="chart-block">
+    <p class="l3p-section-label">Path to positive — net profit by sale price, Lot + Home exit</p>
+
+    <div class="sens-row">
+      <span class="sens-label">$250K</span>
+      <div class="sens-track"><div class="sens-fill loss" style="width:100%;">−$615K</div></div>
+    </div>
+    <div class="sens-row">
+      <span class="sens-label">$260K</span>
+      <div class="sens-track"><div class="sens-fill loss" style="width:85%;">−$542K</div></div>
+    </div>
+    <div class="sens-row">
+      <span class="sens-label">$285K</span>
+      <div class="sens-track"><div class="sens-fill loss" style="width:58%;">−$360K base</div></div>
+    </div>
+    <div class="sens-row">
+      <span class="sens-label">$300K</span>
+      <div class="sens-track"><div class="sens-fill loss" style="width:40%;">−$251K</div></div>
+    </div>
+    <div class="sens-row">
+      <span class="sens-label">$325K</span>
+      <div class="sens-track"><div class="sens-fill near" style="width:12%;">−$69K</div></div>
+    </div>
+    <div class="sens-row">
+      <span class="sens-label">$340K</span>
+      <div class="sens-track"><div class="sens-fill gain" style="width:6%;">+$40K</div></div>
+    </div>
+
+    <p style="font-size:10px;color:#787876;margin:8px 0 0;">Break-even requires ~$334K per package — $49K above the deck's $285K base underwriting and $9K above the deck's own stated upside case of $325K. Recent sold comps in the corridor: $265K–$270K, meaning price alone does not close the gap — cost reduction and capital structure levers matter too.</p>
+  </div>
+
+  <hr class="l3p-divider">
+
+  <p class="l3p-section-label">What this kind of review is worth to you</p>
+  <div class="value-prop-grid">
+    <div class="vp-card">
+      <p class="vp-title">Your model has two versions</p>
+      <p class="vp-body">Most operators have spreadsheets that don't reconcile. We find the gap before your lender or partner does.</p>
+    </div>
+    <div class="vp-card">
+      <p class="vp-title">Your assumptions aren't tested</p>
+      <p class="vp-body">A number in a cell is not a verified assumption. We stress every input — fees, comps, absorption, financing — against real market data.</p>
+    </div>
+    <div class="vp-card">
+      <p class="vp-title">Your exit strategy is one scenario</p>
+      <p class="vp-body">What happens on a partial close? A rate move? A cost overrun? These need to exist before you raise capital, not after.</p>
+    </div>
+    <div class="vp-card">
+      <p class="vp-title">Your deck and your model disagree</p>
+      <p class="vp-body">Decks are built to convince. Models are built to hold up under scrutiny. We make sure both say the same thing.</p>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <div class="cta-text">
+      <p class="ct-title">Your deal deserves this level of scrutiny.</p>
+      <p class="ct-sub">Let's review your model before your capital partners do.</p>
+    </div>
+    <a class="cta-btn" href="mailto:mark.pulaski@l3pdynamics.com?subject=Model%20Review%20Inquiry">Book a discovery call ↗</a>
+  </div>
+
+  <p class="l3p-footer">L3P Dynamics · Strategy | Intelligence | Execution · Case study based on actual client analysis. All figures are planning estimates, de-identified for publication.</p>
+</div>
+
+</body>
+</html>
