@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study — Isolating the Rate Lever from the Service-Line Bet | L3P Dynamics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#000000;
+    --charcoal:#4B4B4B;
+    --warmgray:#787876;
+    --lightgray:#CCCCCC;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--black);
+    color:var(--white);
+    font-family:'Poppins',sans-serif;
+    font-weight:400;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--white);}
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px;}
+
+  /* Nav */
+  nav{
+    border-bottom:1px solid var(--charcoal);
+    padding:20px 0;
+  }
+  nav .wrap{display:flex;justify-content:space-between;align-items:center;}
+  .wordmark{
+    font-weight:700;
+    font-size:14px;
+    letter-spacing:2px;
+    text-decoration:none;
+  }
+  .wordmark span{color:var(--warmgray);font-weight:300;}
+  .back-link{
+    font-size:12px;
+    color:var(--lightgray);
+    text-decoration:none;
+    letter-spacing:0.5px;
+  }
+  .back-link:hover{color:var(--white);}
+
+  /* Hero */
+  header.hero{padding:72px 0 48px;border-bottom:1px solid var(--charcoal);}
+  .eyebrow-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:28px;
+  }
+  .tag{
+    font-size:11px;
+    letter-spacing:1.5px;
+    color:var(--lightgray);
+    border:1px solid var(--charcoal);
+    padding:6px 12px;
+    border-radius:2px;
+  }
+  h1{
+    font-size:32px;
+    font-weight:700;
+    line-height:1.2;
+    letter-spacing:-0.5px;
+    max-width:26ch;
+    margin-bottom:18px;
+  }
+  .dek{
+    font-size:16px;
+    color:var(--lightgray);
+    max-width:100%;
+    font-weight:300;
+  }
+
+  /* Section */
+  section{padding:56px 0;border-bottom:1px solid var(--charcoal);}
+  section:last-of-type{border-bottom:none;}
+  h2{
+    font-size:18px;
+    font-weight:700;
+    letter-spacing:-0.3px;
+    margin-bottom:20px;
+  }
+  h3{
+    font-size:13px;
+    font-weight:500;
+    color:var(--lightgray);
+    margin-bottom:10px;
+  }
+  p{
+    font-size:15px;
+    max-width:100%;
+    margin-bottom:16px;
+    color:var(--white);
+  }
+  p.muted{color:var(--lightgray);}
+
+  /* Two-column narrative row */
+  .narrative-grid{
+    display:grid;
+    grid-template-columns:140px 1fr;
+    gap:32px;
+  }
+  .narrative-grid h3{margin-top:2px;}
+
+  /* Headline stat */
+  .headline-stat{
+    padding:40px 0;
+  }
+  .headline-stat .stat-label{
+    font-size:12px;
+    color:var(--warmgray);
+    letter-spacing:0.5px;
+    margin-bottom:12px;
+  }
+  .headline-stat .stat-number{
+    font-size:44px;
+    font-weight:700;
+    letter-spacing:-1px;
+    line-height:1.1;
+    margin-bottom:16px;
+  }
+  .headline-stat p{font-size:16px;max-width:100%;}
+
+  /* Supporting stat row */
+  .stat-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+    margin-top:12px;
+  }
+  .stat-box{
+    border:1px solid var(--charcoal);
+    padding:24px;
+  }
+  .stat-box .num{
+    font-size:26px;
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  .stat-box .label{
+    font-size:12px;
+    color:var(--lightgray);
+  }
+
+  /* Bar chart */
+  .chart-title{font-size:12px;color:var(--warmgray);letter-spacing:0.5px;margin-bottom:20px;}
+  .bars{display:flex;flex-direction:column;gap:14px;margin-bottom:8px;}
+  .bar-row{display:grid;grid-template-columns:170px 1fr 90px;align-items:center;gap:12px;}
+  .bar-row .bar-name{font-size:13px;color:var(--lightgray);}
+  .bar-track{background:var(--charcoal);height:22px;position:relative;}
+  .bar-fill{background:var(--white);height:100%;}
+  .bar-row .bar-value{font-size:13px;text-align:right;font-weight:500;}
+  .chart-note{font-size:12px;color:var(--warmgray);margin-top:14px;max-width:100%;}
+
+  /* Sensitivity grid */
+  .sens-wrap{overflow-x:auto;margin-top:8px;}
+  table.sens{
+    border-collapse:collapse;
+    width:100%;
+    min-width:520px;
+  }
+  table.sens caption{
+    text-align:left;
+    font-size:12px;
+    color:var(--warmgray);
+    letter-spacing:0.5px;
+    margin-bottom:16px;
+  }
+  table.sens th, table.sens td{
+    border:1px solid var(--charcoal);
+    padding:12px 10px;
+    text-align:center;
+    font-size:13px;
+  }
+  table.sens thead th{
+    color:var(--lightgray);
+    font-weight:500;
+    background:var(--black);
+  }
+  table.sens th.row-label{
+    color:var(--lightgray);
+    font-weight:500;
+    text-align:left;
+  }
+  table.sens td{font-weight:500;}
+  /* grayscale intensity only — no accent color, per brand rule */
+  .c-neg-3{background:#141414;color:var(--lightgray);}
+  .c-neg-2{background:#2a2a2a;color:var(--lightgray);}
+  .c-neg-1{background:#4B4B4B;color:var(--white);}
+  .c-flat {background:#787876;color:var(--white);}
+  .c-pos  {background:var(--lightgray);color:var(--black);font-weight:700;}
+  .sens-legend{
+    display:flex;
+    gap:18px;
+    margin-top:16px;
+    flex-wrap:wrap;
+  }
+  .sens-legend .swatch{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:11px;
+    color:var(--lightgray);
+  }
+  .sens-legend .dot{width:12px;height:12px;display:inline-block;}
+
+  /* Footer */
+  footer{padding:48px 0 64px;}
+  footer p{font-size:12px;color:var(--warmgray);max-width:100%;}
+  footer .cta{
+    display:inline-block;
+    margin-top:20px;
+    padding:14px 28px;
+    border:1px solid var(--white);
+    color:var(--white);
+    text-decoration:none;
+    font-size:13px;
+    letter-spacing:0.5px;
+  }
+
+  @media(max-width:640px){
+    h1{font-size:26px;}
+    .narrative-grid{grid-template-columns:1fr;gap:8px;}
+    .stat-row{grid-template-columns:1fr;}
+    .headline-stat .stat-number{font-size:32px;}
+    .bar-row{grid-template-columns:110px 1fr 70px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="wordmark" href="https://l3pdynamics.com">L3P <span>DYNAMICS</span></a>
+    <a class="back-link" href="https://l3pdynamics.com">← L3P Dynamics</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow-row">
+      <span class="tag">Real Estate / Development</span>
+      <span class="tag">Owners &amp; Decision-Makers</span>
+    </div>
+    <h1>Isolating the rate lever from the service-line bet</h1>
+    <p class="dek">A development sponsor had two open underwriting questions and one pro forma. Separating them changed which one they funded first.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>The situation</h2>
+    <div class="narrative-grid">
+      <h3>Before L3P</h3>
+      <div>
+        <p>A development sponsor building a new independent living community in a Southwest submarket had two open questions before finalizing the project's underwriting: how aggressively to price against the comp set, and whether to build an in-house home health line into the community from day one.</p>
+        <p class="muted">Both decisions were living inside a single working pro forma, which meant neither one's true economics could be seen on its own — a stronger topline could just as easily be masking a drag from the other.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>What L3P did</h2>
+    <div class="narrative-grid">
+      <h3>The build</h3>
+      <div>
+        <p>Built four parallel five-year pro formas off one shared architecture — a base case, a rate-optimized case, and a home health overlay of each — then layered a variance-decomposition pass on top that holds occupancy and expense methodology identical within each pair, so every dollar of difference could be attributed to a single lever rather than blended into one topline delta.</p>
+        <p>For the home health line specifically, built a standalone unit-economics model with sixty months of lease-up detail and a two-variable sensitivity grid — client penetration against average care hours per client per week — to find the exact operating conditions where the line stops being a drag.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="headline-stat">
+      <div class="stat-label">THE FINDING</div>
+      <div class="stat-number">Never turns positive at the planned service level</div>
+      <p>At the sponsor's underwritten assumption — 8 hours of care per client per week — Year-5 operating income for the home health line stays negative even at 40% resident penetration, double the stabilized case being underwritten. The line only crosses into profitability once average care hours rise to roughly 12+ per week, a service-delivery decision, not a lease-up one.</p>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="num">+$19.5M</div>
+        <div class="label">5-year NOI impact of the rate lever alone, isolated at identical occupancy and expense methodology</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">+3.8 pts</div>
+        <div class="label">Stabilized margin expansion from the rate lever — the highest-confidence dollar in the model</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>The four scenarios, isolated</h2>
+    <div class="chart-title">5-YEAR NET OPERATING INCOME BY SCENARIO</div>
+    <div class="bars">
+      <div class="bar-row">
+        <div class="bar-name">Base case</div>
+        <div class="bar-track"><div class="bar-fill" style="width:82.4%"></div></div>
+        <div class="bar-value">$90.9M</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Rate-optimized</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+        <div class="bar-value">$110.4M</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Base + home health</div>
+        <div class="bar-track"><div class="bar-fill" style="width:81.9%"></div></div>
+        <div class="bar-value">$90.5M</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">Rate-optimized + HH</div>
+        <div class="bar-track"><div class="bar-fill" style="width:99.5%"></div></div>
+        <div class="bar-value">$109.8M</div>
+      </div>
+    </div>
+    <p class="chart-note">The rate lever moves the whole business. The home health line, run through the same four scenarios, is a rounding error at the community level — which is exactly why it needed its own model rather than a line inside this one.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Where the home health line actually breaks even</h2>
+    <h3>Year-5 operating income by penetration × average care hours/client/week</h3>
+    <div class="sens-wrap">
+      <table class="sens">
+        <thead>
+          <tr>
+            <th class="row-label">Penetration</th>
+            <th>4 hrs</th>
+            <th>8 hrs</th>
+            <th>12 hrs</th>
+            <th>16 hrs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th class="row-label">10%</th>
+            <td class="c-neg-3">($214K)</td>
+            <td class="c-neg-3">($177K)</td>
+            <td class="c-neg-2">($141K)</td>
+            <td class="c-neg-1">($105K)</td>
+          </tr>
+          <tr>
+            <th class="row-label">20% <span style="color:var(--warmgray);font-weight:400;">— underwritten case</span></th>
+            <td class="c-neg-3">($228K)</td>
+            <td class="c-neg-2">($155K)</td>
+            <td class="c-neg-1">($82K)</td>
+            <td class="c-flat">($10K)</td>
+          </tr>
+          <tr>
+            <th class="row-label">30%</th>
+            <td class="c-neg-3">($242K)</td>
+            <td class="c-neg-2">($133K)</td>
+            <td class="c-flat">($24K)</td>
+            <td class="c-pos">$86K</td>
+          </tr>
+          <tr>
+            <th class="row-label">40%</th>
+            <td class="c-neg-3">($256K)</td>
+            <td class="c-neg-1">($111K)</td>
+            <td class="c-pos">$35K</td>
+            <td class="c-pos">$180K</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sens-legend">
+      <span class="swatch"><span class="dot" style="background:#141414;"></span>Deep negative</span>
+      <span class="swatch"><span class="dot" style="background:#4B4B4B;"></span>Narrowing</span>
+      <span class="swatch"><span class="dot" style="background:#787876;"></span>Near breakeven</span>
+      <span class="swatch"><span class="dot" style="background:var(--lightgray);"></span>Accretive</span>
+    </div>
+    <p class="chart-note" style="margin-top:20px;">Read down the 8-hour column — the sponsor's actual assumption — and the line is negative at every penetration level tested, including double the underwritten case. Read across the 20% row and it only turns around once care hours nearly double. That's a different capital conversation than "wait for lease-up."</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>What changed</h2>
+    <div class="narrative-grid">
+      <h3>Decision</h3>
+      <div>
+        <p>The rate strategy moved forward as the primary lever — it was the highest-confidence dollar in the model and didn't depend on a second, unproven line of business. The home health build was reframed from a lease-up timing question to a service-delivery design question: the sponsor now has the specific care-hours threshold the model needs to clear before the line is worth underwriting into the base case, rather than adding it as a growth assumption and finding out in year three.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Figures shown are rounded and rescaled from the underlying models to protect engagement confidentiality; all ratios and directional findings are preserved.</p>
+    <a class="cta" href="mailto:mark.pulaski@l3pdynamics.com">Book a discovery call</a>
+  </div>
+</footer>
+
+</body>
+</html>
