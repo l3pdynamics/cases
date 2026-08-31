@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L3P Dynamics — Case Study: Cost Structure Reposition</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #000000; font-family: 'Inter', sans-serif; }
+
+  .l3p-root {
+    background: #000000; color: #FFFFFF; font-family: 'Inter', sans-serif;
+    padding: 48px 36px 56px; max-width: 860px; margin: 0 auto; min-height: 600px;
+  }
+
+  .l3p-mark-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 0.5px solid #4B4B4B; padding-bottom: 16px; margin-bottom: 36px;
+  }
+  .l3p-wordmark { font-size: 15px; font-weight: 700; letter-spacing: 1.5px; color: #FFFFFF; }
+  .l3p-tagline { font-size: 9px; font-weight: 300; letter-spacing: 1.5px; text-transform: uppercase; color: #787876; margin-top: 3px; }
+  .l3p-case-label { font-size: 10px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: #CCCCCC; }
+
+  .l3p-eyebrow { font-size: 11px; font-weight: 400; letter-spacing: 2px; color: #787876; text-transform: uppercase; margin: 0 0 10px; }
+  .l3p-hero-title { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.15; color: #FFFFFF; margin: 0 0 8px; }
+  .l3p-hero-sub { font-size: 14px; font-weight: 400; color: #787876; margin: 0 0 32px; line-height: 1.55; max-width: 620px; }
+
+  .l3p-divider { border: none; border-top: 0.5px solid #4B4B4B; margin: 28px 0; }
+  .l3p-section-label { font-size: 10px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; color: #787876; margin: 0 0 14px; }
+
+  .headline-callout {
+    background: #4B4B4B; border-radius: 10px; padding: 26px 28px; margin-bottom: 32px;
+    display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+  }
+  .headline-figure { font-size: 40px; font-weight: 700; letter-spacing: -0.5px; color: #FFFFFF; line-height: 1; white-space: nowrap; }
+  .headline-text { font-size: 13px; font-weight: 400; color: #F0F0F0; line-height: 1.5; flex: 1; min-width: 260px; }
+
+  .narrative-block { margin-bottom: 26px; }
+  .narrative-block p { font-size: 13px; font-weight: 400; line-height: 1.65; color: #E8E8E8; margin: 0 0 12px; }
+  .narrative-block strong { color: #FFFFFF; font-weight: 500; }
+
+  .bridge-wrap { margin-bottom: 32px; }
+  .bridge-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .bridge-label { font-size: 11px; font-weight: 500; color: #CCCCCC; width: 190px; flex-shrink: 0; }
+  .bridge-track { flex: 1; height: 22px; background: #1A1A1A; border: 0.5px solid #4B4B4B; border-radius: 3px; overflow: hidden; position: relative; }
+  .bridge-fill { height: 100%; background: #787876; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; }
+  .bridge-fill.bright { background: #CCCCCC; }
+  .bridge-fill.mid { background: #5F5E5A; }
+  .bridge-fill.dim { background: #35342F; }
+  .bridge-pct { font-size: 10px; font-weight: 700; color: #000000; }
+  .bridge-note { font-size: 10px; font-weight: 300; color: #787876; width: 150px; flex-shrink: 0; text-align: right; }
+
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 32px; }
+  .compare-card { background: #0D0D0D; border: 0.5px solid #4B4B4B; border-radius: 8px; padding: 20px 22px; }
+  .compare-card.before { border-top: 3px solid #787876; }
+  .compare-card.after { border-top: 3px solid #CCCCCC; }
+  .compare-label { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #787876; margin-bottom: 10px; }
+  .compare-card.after .compare-label { color: #CCCCCC; }
+  .compare-card p { font-size: 12.5px; font-weight: 400; line-height: 1.6; color: #D8D8D8; margin: 0; }
+
+  .method-list { list-style: none; margin: 0 0 32px; padding: 0; counter-reset: step; }
+  .method-list li { counter-increment: step; position: relative; padding-left: 40px; margin-bottom: 18px; font-size: 13px; line-height: 1.6; color: #E8E8E8; }
+  .method-list li::before {
+    content: counter(step); position: absolute; left: 0; top: 0; width: 26px; height: 26px;
+    border: 0.5px solid #787876; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #CCCCCC;
+  }
+  .method-list li strong { display: block; color: #FFFFFF; font-weight: 500; font-size: 12px; letter-spacing: 0.3px; text-transform: uppercase; margin-bottom: 4px; }
+
+  .stat-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 32px; }
+  .stat-box { background: #0D0D0D; border: 0.5px solid #4B4B4B; border-radius: 8px; padding: 18px 16px; text-align: left; }
+  .stat-num { font-size: 22px; font-weight: 700; color: #FFFFFF; line-height: 1; margin-bottom: 6px; }
+  .stat-label { font-size: 10.5px; font-weight: 400; color: #787876; line-height: 1.4; }
+
+  .l3p-footer { margin-top: 40px; padding-top: 20px; border-top: 0.5px solid #4B4B4B; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .l3p-footer-note { font-size: 9.5px; font-weight: 300; color: #787876; line-height: 1.5; max-width: 480px; }
+  .l3p-cta { font-size: 10.5px; font-weight: 500; letter-spacing: 0.5px; color: #CCCCCC; text-decoration: none; border: 0.5px solid #787876; border-radius: 20px; padding: 9px 18px; white-space: nowrap; }
+
+  @media (max-width: 640px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    .stat-strip { grid-template-columns: 1fr; }
+    .headline-figure { font-size: 32px; }
+    .bridge-label { width: 130px; font-size: 10px; }
+    .bridge-note { width: 110px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="l3p-root">
+
+  <div class="l3p-mark-row">
+    <div>
+      <div class="l3p-wordmark">L3P DYNAMICS</div>
+      <div class="l3p-tagline">Strategy | Intelligence | Execution</div>
+    </div>
+    <div class="l3p-case-label">Case Study</div>
+  </div>
+
+  <div class="l3p-eyebrow">Cost Structure &amp; Unit-Mix Reposition</div>
+  <h1 class="l3p-hero-title">The Reposition That Fixed the Margin, Not the Activity</h1>
+  <p class="l3p-hero-sub">A single site's approved annual budget assumed one service tier would keep running at its existing staffing level for the rest of the year. Its activity had already fallen below what that staffing supported.</p>
+
+  <div class="headline-callout">
+    <div class="headline-figure">~$75K</div>
+    <div class="headline-text">Repositioning unit mix and resizing staffing to match actual activity swung a five-month stretch of operating income from a <strong>budgeted loss to a real profit</strong> &mdash; without assuming any revenue or activity growth.</div>
+  </div>
+
+  <div class="l3p-section-label">The Situation</div>
+  <div class="narrative-block">
+    <p>The approved annual budget carried one lower-demand service tier at a staffing level built for activity that tier no longer had. The budget didn't model a fix &mdash; it simply extended the existing structure forward through year-end, cost and all.</p>
+    <p>Meanwhile, a higher-demand tier at the same site had room to absorb additional capacity. The question wasn't whether the site had a revenue problem. It was whether the cost structure matched the business that was actually there.</p>
+  </div>
+
+  <div class="l3p-section-label">What the Model Found</div>
+  <div class="narrative-block">
+    <p>Reallocating capacity toward the higher-demand tier let staffing in the lower-demand tier be resized to its real activity, rather than the level it was budgeted for. That resizing came with a small, deliberate trade: overall activity and revenue for the period came in modestly below the original budget. The cost reduction more than covered it.</p>
+  </div>
+
+  <div class="bridge-wrap">
+    <div class="bridge-row">
+      <div class="bridge-label">Budgeted NOI</div>
+      <div class="bridge-track"><div class="bridge-fill dim" style="width:7%"></div></div>
+      <div class="bridge-note">~($5K) &middot; near breakeven</div>
+    </div>
+    <div class="bridge-row">
+      <div class="bridge-label">+ Cost structure resized</div>
+      <div class="bridge-track"><div class="bridge-fill bright" style="width:100%"><span class="bridge-pct">~+$105K</span></div></div>
+      <div class="bridge-note">labor-driven</div>
+    </div>
+    <div class="bridge-row">
+      <div class="bridge-label">&minus; Revenue give-back</div>
+      <div class="bridge-track"><div class="bridge-fill mid" style="width:29%"><span class="bridge-pct" style="color:#fff;">~&minus;$30K</span></div></div>
+      <div class="bridge-note">activity trade</div>
+    </div>
+    <div class="bridge-row">
+      <div class="bridge-label">Repositioned NOI</div>
+      <div class="bridge-track"><div class="bridge-fill" style="width:67%"><span class="bridge-pct" style="color:#000;">~+$70K</span></div></div>
+      <div class="bridge-note">realized</div>
+    </div>
+  </div>
+
+  <div class="compare-grid">
+    <div class="compare-card before">
+      <div class="compare-label">Before</div>
+      <p>Staffing in the lower-demand tier held at the level budgeted at the start of the year, even as activity in that tier had already fallen &mdash; carrying labor cost the site's actual business no longer supported.</p>
+    </div>
+    <div class="compare-card after">
+      <div class="compare-label">After</div>
+      <p>Capacity reallocated toward the higher-demand tier; staffing in the lower-demand tier resized to match real activity, funded in part by a modest, deliberate reduction in that tier's activity.</p>
+    </div>
+  </div>
+
+  <div class="l3p-section-label">Method</div>
+  <ol class="method-list">
+    <li><strong>Modeled the reposition against real activity, not the static budget</strong>Built a revised proforma testing what staffing and revenue would look like under a reallocated service tier model, rather than accepting the lower-demand tier's declining activity as a fixed condition to budget around.</li>
+    <li><strong>Refined the model through three rounds before treating it as final</strong>Caught and corrected a duplicated labor line, a role no longer supportable at the resulting activity, a revenue-timing correction, and a compensation figure reset to the approved rate &mdash; three iterations before the numbers were trusted.</li>
+    <li><strong>Compared the reposition to the approved budget, month by month</strong>Built a direct FTE and labor-cost comparison between the approved budget and the reallocation model across the affected months, isolating exactly where cost moved and by how much.</li>
+    <li><strong>Quantified the trade, not just the pieces</strong>Netted the labor savings against the revenue given up to show the actual operating impact of the reposition, rather than presenting either side in isolation.</li>
+  </ol>
+
+  <div class="l3p-section-label">Outcome</div>
+  <div class="stat-strip">
+    <div class="stat-box">
+      <div class="stat-num">~$75K</div>
+      <div class="stat-label">NOI swing over the period &mdash; budgeted loss to realized profit</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">~-8%</div>
+      <div class="stat-label">labor cost reduction across the same five months (&asymp;$100K)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">~-2%</div>
+      <div class="stat-label">revenue given up to fund the reposition &mdash; a deliberate, bounded trade</div>
+    </div>
+  </div>
+
+  <div class="narrative-block">
+    <p>The fix wasn't more activity. It was resizing the cost structure to the activity that already existed, and accepting a small, known revenue trade to get there instead of carrying an unsupportable staffing model forward on hope. That's a different conversation with ownership than "grow the top line" &mdash; and a more defensible one when the numbers are tested against what the site can actually deliver.</p>
+  </div>
+
+  <div class="l3p-footer">
+    <div class="l3p-footer-note">De-identified case study. Figures rounded. Entity, site, and unit-level detail withheld per client confidentiality practice.</div>
+    <a href="mailto:mark.pulaski@l3pdynamics.com" class="l3p-cta">Book a discovery call &rarr;</a>
+  </div>
+
+</div>
+
+</body>
+</html>
