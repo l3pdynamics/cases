@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L3P Dynamics — Case Study: Ownership, Twice Over</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #000000; font-family: 'Inter', sans-serif; }
+
+  .l3p-root {
+    background: #000000; color: #FFFFFF; font-family: 'Inter', sans-serif;
+    padding: 48px 36px 56px; max-width: 860px; margin: 0 auto; min-height: 600px;
+  }
+
+  .l3p-mark-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 0.5px solid #4B4B4B; padding-bottom: 16px; margin-bottom: 36px;
+  }
+  .l3p-wordmark { font-size: 15px; font-weight: 700; letter-spacing: 1.5px; color: #FFFFFF; }
+  .l3p-tagline { font-size: 9px; font-weight: 300; letter-spacing: 1.5px; text-transform: uppercase; color: #787876; margin-top: 3px; }
+  .l3p-case-label { font-size: 10px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: #CCCCCC; }
+
+  .l3p-eyebrow { font-size: 11px; font-weight: 400; letter-spacing: 2px; color: #787876; text-transform: uppercase; margin: 0 0 10px; }
+  .l3p-hero-title { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.15; color: #FFFFFF; margin: 0 0 8px; }
+  .l3p-hero-sub { font-size: 14px; font-weight: 400; color: #787876; margin: 0 0 32px; line-height: 1.55; max-width: 620px; }
+
+  .l3p-divider { border: none; border-top: 0.5px solid #4B4B4B; margin: 28px 0; }
+  .l3p-section-label { font-size: 10px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; color: #787876; margin: 0 0 14px; }
+
+  .headline-callout {
+    background: #4B4B4B; border-radius: 10px; padding: 26px 28px; margin-bottom: 32px;
+    display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+  }
+  .headline-figure { font-size: 40px; font-weight: 700; letter-spacing: -0.5px; color: #FFFFFF; line-height: 1; white-space: nowrap; }
+  .headline-text { font-size: 13px; font-weight: 400; color: #F0F0F0; line-height: 1.5; flex: 1; min-width: 260px; }
+
+  .narrative-block { margin-bottom: 26px; }
+  .narrative-block p { font-size: 13px; font-weight: 400; line-height: 1.65; color: #E8E8E8; margin: 0 0 12px; }
+  .narrative-block strong { color: #FFFFFF; font-weight: 500; }
+
+  .bar-wrap { margin-bottom: 32px; }
+  .bar-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .bar-label { font-size: 11px; font-weight: 500; color: #CCCCCC; width: 170px; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 22px; background: #1A1A1A; border: 0.5px solid #4B4B4B; border-radius: 3px; overflow: hidden; position: relative; }
+  .bar-fill { height: 100%; background: #787876; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; }
+  .bar-fill.bright { background: #CCCCCC; }
+  .bar-pct { font-size: 10px; font-weight: 700; color: #000000; }
+  .bar-note { font-size: 10px; font-weight: 300; color: #787876; width: 150px; flex-shrink: 0; text-align: right; }
+
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 32px; }
+  .compare-card { background: #0D0D0D; border: 0.5px solid #4B4B4B; border-radius: 8px; padding: 20px 22px; }
+  .compare-card.before { border-top: 3px solid #787876; }
+  .compare-card.after { border-top: 3px solid #CCCCCC; }
+  .compare-label { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #787876; margin-bottom: 10px; }
+  .compare-card.after .compare-label { color: #CCCCCC; }
+  .compare-card p { font-size: 12.5px; font-weight: 400; line-height: 1.6; color: #D8D8D8; margin: 0; }
+
+  .method-list { list-style: none; margin: 0 0 32px; padding: 0; counter-reset: step; }
+  .method-list li { counter-increment: step; position: relative; padding-left: 40px; margin-bottom: 18px; font-size: 13px; line-height: 1.6; color: #E8E8E8; }
+  .method-list li::before {
+    content: counter(step); position: absolute; left: 0; top: 0; width: 26px; height: 26px;
+    border: 0.5px solid #787876; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #CCCCCC;
+  }
+  .method-list li strong { display: block; color: #FFFFFF; font-weight: 500; font-size: 12px; letter-spacing: 0.3px; text-transform: uppercase; margin-bottom: 4px; }
+
+  .stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 32px; }
+  .stat-box { background: #0D0D0D; border: 0.5px solid #4B4B4B; border-radius: 8px; padding: 18px 16px; text-align: left; }
+  .stat-num { font-size: 22px; font-weight: 700; color: #FFFFFF; line-height: 1; margin-bottom: 6px; }
+  .stat-label { font-size: 10.5px; font-weight: 400; color: #787876; line-height: 1.4; }
+
+  .l3p-footer { margin-top: 40px; padding-top: 20px; border-top: 0.5px solid #4B4B4B; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .l3p-footer-note { font-size: 9.5px; font-weight: 300; color: #787876; line-height: 1.5; max-width: 480px; }
+  .l3p-cta { font-size: 10.5px; font-weight: 500; letter-spacing: 0.5px; color: #CCCCCC; text-decoration: none; border: 0.5px solid #787876; border-radius: 20px; padding: 9px 18px; white-space: nowrap; }
+
+  @media (max-width: 640px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    .stat-strip { grid-template-columns: 1fr 1fr; }
+    .headline-figure { font-size: 32px; }
+    .bar-note { width: 120px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="l3p-root">
+
+  <div class="l3p-mark-row">
+    <div>
+      <div class="l3p-wordmark">L3P DYNAMICS</div>
+      <div class="l3p-tagline">Strategy | Intelligence | Execution</div>
+    </div>
+    <div class="l3p-case-label">Case Study</div>
+  </div>
+
+  <div class="l3p-eyebrow">Multi-Site Operations &middot; Embedded Asset Management</div>
+  <h1 class="l3p-hero-title">Ownership, Twice Over</h1>
+  <p class="l3p-hero-sub">A multi-site, recurring-revenue operator in the Southeast brought in ongoing asset management and business intelligence ownership for a sub-portfolio &mdash; not a diagnostic engagement, a standing one. Two years in, the platform is both growing and tracking to the plan built for it.</p>
+
+  <div class="headline-callout">
+    <div class="headline-figure">36.2%</div>
+    <div class="headline-text">Trailing-twelve-month net operating income growth &mdash; sustained by an operating budget authored by the same person holding the platform accountable to it.</div>
+  </div>
+
+  <div class="l3p-section-label">The Situation</div>
+  <div class="narrative-block">
+    <p>The engagement began as direct, ongoing ownership of a regional sub-portfolio's operating performance within a larger multi-site platform &mdash; asset management authority and the reporting relationship, not a project with an end date. The mandate: grow the number, and build the infrastructure to plan and defend it going forward.</p>
+    <p>Two years on, both halves of that mandate show up in the same set of books &mdash; not as separate claims, but as one continuous record.</p>
+  </div>
+
+  <div class="l3p-section-label">What Grew, and Why</div>
+  <div class="narrative-block">
+    <p>Trailing-twelve-month NOI grew from roughly <strong>$15.0M to $20.4M</strong>, with margin expanding approximately 330 basis points. The growth held on every timeframe tested &mdash; and it accelerated the closer the window moved to the present, which ruled out a one-quarter fluke.</p>
+    <p>The more important finding was where the growth came from. Decomposed into volume and rate effects, roughly <strong>83% of the year's NOI increase came from pricing, acuity capture and cost discipline &mdash; not from filling more units.</strong> Every incremental revenue dollar converted to roughly 55 cents of NOI, well above the sector's typical 40&ndash;50 cent flow-through.</p>
+  </div>
+
+  <div class="bar-wrap">
+    <div class="bar-row">
+      <div class="bar-label">Trailing 12-mo NOI</div>
+      <div class="bar-track"><div class="bar-fill bright" style="width:74%"><span class="bar-pct">+36.2%</span></div></div>
+      <div class="bar-note">$15.0M &rarr; $20.4M</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">NOI margin</div>
+      <div class="bar-track"><div class="bar-fill" style="width:58%"><span class="bar-pct" style="color:#000;">+330 bps</span></div></div>
+      <div class="bar-note">expansion</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Growth from rate, not volume</div>
+      <div class="bar-track"><div class="bar-fill bright" style="width:83%"><span class="bar-pct">83%</span></div></div>
+      <div class="bar-note">of NOI increase</div>
+    </div>
+  </div>
+
+  <div class="l3p-section-label">Then the Plan Had to Hold</div>
+  <div class="narrative-block">
+    <p>Growth is one claim. Authorship of the plan governing it is a different one &mdash; and the proof isn't a signature, it's the tracking. The operating budget for the current fiscal year was authored for this platform, then held against seven months of real, uneven volume growth that would ordinarily strain any forecast.</p>
+    <p>Revenue landed <strong>1.5% ahead of budget</strong>; operating expense ran <strong>1.1% over budget</strong> &mdash; a real variance, not a rounding error &mdash; and net operating income still finished <strong>3.4% ahead of plan</strong> because the revenue outperformance was large enough to absorb it. That kind of coherence across dozens of revenue and expense lines, not just the topline, is what separates a budget someone owns from a budget someone is handed.</p>
+  </div>
+
+  <div class="compare-grid">
+    <div class="compare-card before">
+      <div class="compare-label">Before Ownership</div>
+      <p>Sub-portfolio performance measured and reported after the fact, with no standing owner accountable for the operating plan or the forecast discipline behind it &mdash; a diagnostic relationship, engaged when something needed explaining.</p>
+    </div>
+    <div class="compare-card after">
+      <div class="compare-label">Under Embedded Ownership</div>
+      <p>Direct, recurring ownership of the plan and the number it governs &mdash; NOI up 36.2% on a trailing-twelve-month basis, tracked monthly against a budget authored in-house and held within low single digits of actual results through real volume growth.</p>
+    </div>
+  </div>
+
+  <div class="l3p-section-label">Method</div>
+  <ol class="method-list">
+    <li><strong>Took direct operating ownership</strong>Assumed asset management authority and the standing reporting relationship for the sub-portfolio &mdash; not a bounded deliverable, an ongoing seat.</li>
+    <li><strong>Authored the operating budget</strong>Built the annual plan for the platform, cycle over cycle, rather than reporting against a plan built elsewhere.</li>
+    <li><strong>Built monthly measurement infrastructure</strong>Stood up per-unit, rate-versus-volume tracking to catch drift against the plan monthly, not at quarter-end.</li>
+    <li><strong>Held the platform to the plan through real volume growth</strong>Kept forecast error in the low single digits across revenue and expense lines during a period that would ordinarily strain accuracy.</li>
+    <li><strong>Decomposed the growth to prove the source</strong>Split the NOI increase into volume and rate effects rather than asserting where the result came from &mdash; the data carries the claim.</li>
+  </ol>
+
+  <div class="l3p-section-label">Outcome</div>
+  <div class="stat-strip">
+    <div class="stat-box">
+      <div class="stat-num">36.2%</div>
+      <div class="stat-label">trailing-12-month NOI growth</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">~330bps</div>
+      <div class="stat-label">NOI margin expansion</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">98.5%</div>
+      <div class="stat-label">revenue forecast accuracy, YTD</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">96.6%</div>
+      <div class="stat-label">NOI forecast accuracy, YTD</div>
+    </div>
+  </div>
+
+  <div class="narrative-block">
+    <p>Neither half of this holds much weight alone. Growth without a plan behind it is a good year that might not repeat. A tight budget with no growth is stewardship, not value creation. Together, on the same platform, in the same set of books, they're a different claim: a sub-portfolio that grew because of the levers this role owns &mdash; rate, acuity, cost per unit &mdash; and a plan for it that survived contact with real operating conditions because the person who wrote it was also the one running the number against it.</p>
+  </div>
+
+  <div class="l3p-footer">
+    <div class="l3p-footer-note">De-identified case study. Figures rounded and scaled. Entity, site-level and geographic detail withheld per client confidentiality practice.</div>
+    <a href="mailto:mark.pulaski@l3pdynamics.com" class="l3p-cta">Book a discovery call &rarr;</a>
+  </div>
+
+</div>
+
+</body>
+</html>

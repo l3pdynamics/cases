@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L3P Dynamics — Case Study: Price-vs-Volume Decomposition</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #000000; font-family: 'Inter', sans-serif; }
+
+  .l3p-root {
+    background: #000000; color: #FFFFFF; font-family: 'Inter', sans-serif;
+    padding: 48px 36px 56px; max-width: 860px; margin: 0 auto; min-height: 600px;
+  }
+
+  .l3p-mark-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 0.5px solid #4B4B4B; padding-bottom: 16px; margin-bottom: 36px;
+  }
+  .l3p-wordmark { font-size: 15px; font-weight: 700; letter-spacing: 1.5px; color: #FFFFFF; }
+  .l3p-tagline { font-size: 9px; font-weight: 300; letter-spacing: 1.5px; text-transform: uppercase; color: #787876; margin-top: 3px; }
+  .l3p-case-label { font-size: 10px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: #CCCCCC; }
+
+  .l3p-eyebrow { font-size: 11px; font-weight: 400; letter-spacing: 2px; color: #787876; text-transform: uppercase; margin: 0 0 10px; }
+  .l3p-hero-title { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.15; color: #FFFFFF; margin: 0 0 8px; }
+  .l3p-hero-sub { font-size: 14px; font-weight: 400; color: #787876; margin: 0 0 32px; line-height: 1.55; max-width: 620px; }
+
+  .l3p-divider { border: none; border-top: 0.5px solid #4B4B4B; margin: 28px 0; }
+  .l3p-section-label { font-size: 10px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; color: #787876; margin: 0 0 14px; }
+
+  .headline-callout {
+    background: #4B4B4B; border-radius: 10px; padding: 26px 28px; margin-bottom: 32px;
+    display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+  }
+  .headline-figure { font-size: 40px; font-weight: 700; letter-spacing: -0.5px; color: #FFFFFF; line-height: 1; white-space: nowrap; }
+  .headline-text { font-size: 13px; font-weight: 400; color: #F0F0F0; line-height: 1.5; flex: 1; min-width: 260px; }
+
+  .narrative-block { margin-bottom: 26px; }
+  .narrative-block p { font-size: 13px; font-weight: 400; line-height: 1.65; color: #E8E8E8; margin: 0 0 12px; }
+  .narrative-block strong { color: #FFFFFF; font-weight: 500; }
+
+  .bridge-wrap { margin-bottom: 32px; }
+  .bridge-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .bridge-label { font-size: 11px; font-weight: 500; color: #CCCCCC; width: 170px; flex-shrink: 0; }
+  .bridge-track { flex: 1; height: 22px; background: #1A1A1A; border: 0.5px solid #4B4B4B; border-radius: 3px; overflow: hidden; position: relative; }
+  .bridge-fill { height: 100%; background: #787876; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; }
+  .bridge-fill.bright { background: #CCCCCC; }
+  .bridge-fill.mid { background: #5F5E5A; }
+  .bridge-fill.neg { background: #2B2B2B; border-right: 0.5px solid #787876; }
+  .bridge-pct { font-size: 10px; font-weight: 700; color: #000000; }
+  .bridge-pct.on-dark { color: #CCCCCC; }
+  .bridge-note { font-size: 10px; font-weight: 300; color: #787876; width: 150px; flex-shrink: 0; text-align: right; }
+
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 32px; }
+  .compare-card { background: #0D0D0D; border: 0.5px solid #4B4B4B; border-radius: 8px; padding: 20px 22px; }
+  .compare-card.before { border-top: 3px solid #787876; }
+  .compare-card.after { border-top: 3px solid #CCCCCC; }
+  .compare-label { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #787876; margin-bottom: 10px; }
+  .compare-card.after .compare-label { color: #CCCCCC; }
+  .compare-card p { font-size: 12.5px; font-weight: 400; line-height: 1.6; color: #D8D8D8; margin: 0; }
+
+  .method-list { list-style: none; margin: 0 0 32px; padding: 0; counter-reset: step; }
+  .method-list li { counter-increment: step; position: relative; padding-left: 40px; margin-bottom: 18px; font-size: 13px; line-height: 1.6; color: #E8E8E8; }
+  .method-list li::before {
+    content: counter(step); position: absolute; left: 0; top: 0; width: 26px; height: 26px;
+    border: 0.5px solid #787876; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #CCCCCC;
+  }
+  .method-list li strong { display: block; color: #FFFFFF; font-weight: 500; font-size: 12px; letter-spacing: 0.3px; text-transform: uppercase; margin-bottom: 4px; }
+
+  .stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 32px; }
+  .stat-box { background: #0D0D0D; border: 0.5px solid #4B4B4B; border-radius: 8px; padding: 18px 16px; text-align: left; }
+  .stat-num { font-size: 20px; font-weight: 700; color: #FFFFFF; line-height: 1; margin-bottom: 6px; }
+  .stat-label { font-size: 10.5px; font-weight: 400; color: #787876; line-height: 1.4; }
+
+  .l3p-footer { margin-top: 40px; padding-top: 20px; border-top: 0.5px solid #4B4B4B; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .l3p-footer-note { font-size: 9.5px; font-weight: 300; color: #787876; line-height: 1.5; max-width: 480px; }
+  .l3p-cta { font-size: 10.5px; font-weight: 500; letter-spacing: 0.5px; color: #CCCCCC; text-decoration: none; border: 0.5px solid #787876; border-radius: 20px; padding: 9px 18px; white-space: nowrap; }
+
+  @media (max-width: 780px) {
+    .stat-strip { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    .stat-strip { grid-template-columns: 1fr; }
+    .headline-figure { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="l3p-root">
+
+  <div class="l3p-mark-row">
+    <div>
+      <div class="l3p-wordmark">L3P DYNAMICS</div>
+      <div class="l3p-tagline">Strategy | Intelligence | Execution</div>
+    </div>
+    <div class="l3p-case-label">Case Study</div>
+  </div>
+
+  <div class="l3p-eyebrow">Price-vs-Volume Decomposition &middot; Senior Living</div>
+  <h1 class="l3p-hero-title">The Growth Number That Was Actually Three Different Stories</h1>
+  <p class="l3p-hero-sub">A regional operator managing a portfolio of licensed, resident-based properties &mdash; billing revenue per occupied unit across several service tiers &mdash; read a rising top line as one broad, healthy growth story. It wasn't.</p>
+
+  <div class="headline-callout">
+    <div class="headline-figure">90%</div>
+    <div class="headline-text">Of one tier's revenue growth was driven almost entirely by rate, not volume &mdash; while the portfolio's blended read showed a far more even, and far more misleading, <strong>57% volume / 43% price</strong> split.</div>
+  </div>
+
+  <div class="l3p-section-label">The Situation</div>
+  <div class="narrative-block">
+    <p>Total revenue was up, and at a glance that looked like confirmation the whole portfolio was moving in the same direction. But a single blended growth number is an average &mdash; and averages can make three very different underlying stories look like one moderate one.</p>
+  </div>
+
+  <div class="l3p-section-label">What the Model Found</div>
+  <div class="narrative-block">
+    <p>At the blended level, portfolio revenue growth split roughly 57% from added units and 43% from higher rates &mdash; a reasonable-looking, broad-based story. Segmented by service tier, that even split turned out to be an average of three tiers that looked nothing alike: one grew almost entirely on volume with rate essentially flat, a second grew almost entirely on price while unit counts barely moved, and a third lost ground on both fronts at once. None of the three individual stories resembled the blended number that would have been reported up.</p>
+  </div>
+
+  <div class="bridge-wrap">
+    <div class="bridge-row">
+      <div class="bridge-label">Tier A</div>
+      <div class="bridge-track"><div class="bridge-fill" style="width:64%"><span class="bridge-pct">+$59,000</span></div></div>
+      <div class="bridge-note">97% volume-driven</div>
+    </div>
+    <div class="bridge-row">
+      <div class="bridge-label">Tier B</div>
+      <div class="bridge-track"><div class="bridge-fill bright" style="width:60%"><span class="bridge-pct">+$55,000</span></div></div>
+      <div class="bridge-note">90% price-driven</div>
+    </div>
+    <div class="bridge-row">
+      <div class="bridge-label">Tier C</div>
+      <div class="bridge-track"><div class="bridge-fill neg" style="width:24%"><span class="bridge-pct on-dark">&minus;$22,000</span></div></div>
+      <div class="bridge-note">volume &amp; price both down</div>
+    </div>
+    <div class="bridge-row">
+      <div class="bridge-label">Net portfolio change</div>
+      <div class="bridge-track"><div class="bridge-fill mid" style="width:100%"><span class="bridge-pct on-dark">+$92,000</span></div></div>
+      <div class="bridge-note">the blended read</div>
+    </div>
+  </div>
+
+  <div class="compare-grid">
+    <div class="compare-card before">
+      <div class="compare-label">Blended read</div>
+      <p>Portfolio revenue is up, split roughly 57% volume / 43% price &mdash; reads as one moderate, broad-based growth story across the whole book.</p>
+    </div>
+    <div class="compare-card after">
+      <div class="compare-label">Segmented read</div>
+      <p>One tier's growth is 97% volume, a second's is 90% price, and a third is shrinking on both. The blended split was an average of three stories &mdash; not a description of any one of them.</p>
+    </div>
+  </div>
+
+  <div class="l3p-section-label">Method</div>
+  <ol class="method-list">
+    <li><strong>Pulled unit volume and revenue by tier</strong>Gathered occupied-unit counts and dollar revenue for each service tier over a multi-month window, from the same operational systems that feed the monthly close.</li>
+    <li><strong>Split the change into two questions</strong>For each tier, separated the revenue change into how much came from more units and how much came from a higher rate paid per unit.</li>
+    <li><strong>Tested both answers against the dollar movement</strong>Reconciled the two effects, tier by tier, until they accounted for the entire revenue change with nothing left over.</li>
+    <li><strong>Rebuilt the blended number from the pieces</strong>Rolled the segmented findings back up to the portfolio level to show exactly what the single blended split had been hiding.</li>
+  </ol>
+
+  <div class="l3p-section-label">Outcome</div>
+  <div class="stat-strip">
+    <div class="stat-box">
+      <div class="stat-num">97% / 3%</div>
+      <div class="stat-label">Tier A's growth &mdash; almost entirely volume, rate essentially flat</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">10% / 90%</div>
+      <div class="stat-label">Tier B's growth &mdash; unit count barely moved, growth was a pricing story</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">49% / 51%</div>
+      <div class="stat-label">Tier C's decline &mdash; units and rate softening in near-equal measure</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">57% / 43%</div>
+      <div class="stat-label">The blended split leadership would have seen without segmentation</div>
+    </div>
+  </div>
+
+  <div class="narrative-block">
+    <p>The finding reframes how growth gets reported to ownership and capital partners: a single blended volume/price split is a summary statistic, not a diagnosis. It can average a tier that's overheating on price together with a tier that's quietly losing units and produce something that reads as moderate and safe. Segmenting first and blending second is the only way to catch that &mdash; and it's the same reconciliation discipline applied at a different level of granularity, repeatable on any multi-tier revenue base.</p>
+  </div>
+
+  <div class="l3p-footer">
+    <div class="l3p-footer-note">De-identified case study. Figures rounded and scaled; underlying percentages reflect the actual finding. Entity, sector, geography, and site-level detail withheld per client confidentiality practice.</div>
+    <a href="mailto:mark.pulaski@l3pdynamics.com" class="l3p-cta">Book a discovery call &rarr;</a>
+  </div>
+
+</div>
+
+</body>
+</html>
